@@ -1,0 +1,54 @@
+touch <file> - makes a cpp file
+
+vi hello.cpp - makes a cpp file hello
+
+g++ <file.cpp> -o <name i want to give>
+
+g++ <file.cpp> makes a a.cout file
+
+./<file> runs the fileS
+
+rm -r <directory> deletes every file 
+
+tar -cvzf <name.tar.gz> files (*.ending)
+
+tar -xzvf file.tar.gz unpacks the compressed files
+
+-std=gnu++0x
+
+ssh s1670091@ph-cplab.ph.ed.ac.uk opens
+
+ssh gbillis@lxplus
+
+ssh -Y gbillis@lxplus
+
+Claustro@1991
+
+Root forum---CLICexp2017    
+
+. /afs/cern.ch/eng/clic/software/x86_64-slc5-gcc41/ILCSOFT/v01-17-05/init_ilcsoft.sh 
+
+
+1st [gbillis@lxplus012 ~]$ source /cvmfs/clicdp.cern.ch/software/ROOT/6.08.06/x86_64-slc6-gcc62-opt/bin/thisroot.sh 
+
+
+2nd [gbillis@lxplus012 ~]$ source /cvmfs/clicdp.cern.ch/compilers/gcc/6.2.0/x86_64-slc6/setup.sh 
+
+
+ILC DIRAC Pauldirac19
+
+project euler gamosavros geoisdead
+
+anajob -> counts events of slcio files.
+
+dumpevent-> run for description  (shows just one event????)
+
+
+tops: vertexed 1165-1201
+
+POST MASTER
+
+source /afs/cern.ch/sw/lcg/external/gcc/4.9/x86_64-slc6-gcc49-opt/setup.sh
+source /afs/cern.ch/sw/lcg/app/releases/ROOT/6.06.08/x86_64-slc6-gcc49-opt/root/bin/thisroot.sh
+
+
