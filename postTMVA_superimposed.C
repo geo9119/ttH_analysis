@@ -31,7 +31,7 @@
 #include "math.h"
 #include <TAttMarker.h>
 
-void postTMVA_plot(){
+void postTMVA_superimposed(){
 
 double m_H1 = 0;
 double m_H2 = 0;
@@ -40,8 +40,8 @@ double m_H2 = 0;
 TH1D* histo1;
 TH1D* histo2;
 
-TH1D *histo3 = new TH1D("mh1","",30,0,250);
-TH1D *histo4 = new TH1D("mh2","",30,0,250);
+TH1D *histo3 = new TH1D("mh1","",100,0,500);
+TH1D *histo4 = new TH1D("mh2","",100,0,500);
 
 
 TFile file1("TMVApp_signal.root"); // opening file
@@ -76,34 +76,41 @@ TCanvas *c1 = new TCanvas("c1","m_H");
 c1->cd();
 
 histo2->SetLineColor(2);
+histo3->SetLineColor(7);
+histo4->SetLineColor(3);
 
-histo4->Draw();
-histo2->Draw("same");
+histo1->DrawNormalized();
+histo2->DrawNormalized("same");
+histo3->DrawNormalized("same");
+histo4->DrawNormalized("same");
 
 TLegend *leg1 = new TLegend(0.6,0.6,0.9,0.9);
 	leg1->SetHeader("wrong solutions");
-	leg1->AddEntry(histo4,"before TMVA","f");
-	leg1->AddEntry(histo2,"after TMVA","f");
+	leg1->AddEntry(histo3,"before TMVA-correct sol","f");
+	leg1->AddEntry(histo1,"after TMVA-correct sol","f");
+	leg1->AddEntry(histo4,"before TMVA-wrong sol","f");
+	leg1->AddEntry(histo2,"after TMVA-wrong sol","f");
 
 leg1->Draw("same");
-c1->SaveAs("m_H_wrong.png");
+c1->SaveAs("m_H_allsuperimposed.png");
 
-
+/*
 
 TCanvas *c2 = new TCanvas("c2","m_H2");
 c2->cd();
 
+//histo4->SetLineColor(2);
 histo1->SetLineColor(2);
 
-histo1->Draw();
-histo3->Draw("same");
+histo1->DrawNormalized();
+histo3->DrawNormalized("same");
 
 TLegend *leg2 = new TLegend(0.6,0.6,0.9,0.9);
 	leg2->SetHeader("correct solutions");
-	leg2->AddEntry(histo3,"before TMVA","f");
-	leg2->AddEntry(histo1,"after TMVA","f");
+	leg2->AddEntry(histo1,"before TMVA","f");
+	leg2->AddEntry(histo3,"after TMVA","f");
 
 leg2->Draw("same");
 c2->SaveAs("m_H_correct.png");
-
+*/
 }
