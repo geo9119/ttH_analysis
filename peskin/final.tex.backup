@@ -1,0 +1,183 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{slashed}
+
+%opening
+\title{Final Project - Radiation of Gluon Jets}
+\author{Georgios Billis}
+
+\begin{document}
+
+\maketitle
+
+\section{}
+For this project I ignore the masses of quarks and electron whereas I assume that gluons do have a 
+ small non-zero mass $\mu$ and in the end of calculation it will be taken to zero.\\
+ \indent The diagram cotributing to $e^{-}e^{+}\rightarrow q\bar{q}$ is at the end of this report (to save time I 
+ did it by hand). This is the only one contributing since we do take into consideration only the one particle
+ irreducible diagrams (in contrast to the diagrams that a gluon-quark loop appears at each of the final state
+ external legs). For this diagram the matrix element is given below:\\
+ \begin{align*}
+  i\mathcal{M}_{g.loop} &=Q_{f}\bar{u}(p') \Big[\int \frac{d^{4}k}{(2\pi)^{4}}(-ig\gamma_{\rho}T^{\alpha})\frac{i}{\slashed{k}'+i\epsilon}(-ie\gamma_{\nu})\frac{i}{\slashed{k}+i\epsilon}(-ig\gamma_{\sigma}T^{\beta})\frac{-ig^{\rho\sigma}\delta^{\alpha\beta}}{(p-k)^{2}-{\mu}^{2}+i\epsilon}\Big]\upsilon(p)\times \\
+               \times &\frac{-ig^{\mu\nu}}{q^{2}}\bar{\upsilon}(q_{2})(-ie\gamma_{\mu})u(q_{1})=\\
+               &=-ig^{2}Q_{f}tr(T^{\alpha}T^{\alpha})\bar{u}(p')\Big[\int \frac{d^{4}k}{(2\pi)^{4}}\gamma_{\rho}\frac{1}{\slashed{k}'+i\epsilon}\gamma^{\nu}\frac{1}{\slashed{k}+i\epsilon}\gamma^{\rho}\frac{1}{(p-k)^{2}-{\mu}^{2}+i\epsilon}\Big]\upsilon(p)\times \\
+               &\times \bar{\upsilon}(q_{2})\Big[(-ie)^{2}\gamma_{\nu}\frac{-i}{q^{2}}\Big]u(q_{1})=\\
+               &=-ig^{2}\bar{u}(p')\Big[\int\frac{d^{4}k}{(2\pi)^{4}} \frac{\gamma_{\rho}\slashed{k}'\gamma^{\nu}\slashed{k}\gamma^{\rho}}{(k'^{2}+i\epsilon)(k^{2}+i\epsilon)((p-k)^{2}-\mu^{2}+i\epsilon)}\Big]\upsilon(p)\times i\mathcal{M}_{lep}_{\nu}
+ \end{align*}
+ where 
+ \begin{align*}
+i\mathcal{M}_{\nu}_{lep}=\bar{\upsilon}(q_{2})\Big[(-ie)^{2}\gamma_{\nu}\frac{-i}{q^{2}}\Big]u(q_{1}) 
+ \end{align*}
+
+and the one loop correction to the quark-gluon vertex is given by the other part, i.e.:
+ 
+ \begin{align*}
+  \bar{u}(p')\delta\Gamma^{\nu}\upsilon(p)=-ig^{2}\bar{u}(p')\Big[\int\frac{d^{4}k}{(2\pi)^{4}} \frac{\gamma_{\rho}\slashed{k}'\gamma^{\nu}\slashed{k}\gamma^{\rho}}{(k'^{2}+i\epsilon)(k^{2}+i\epsilon)((p-k)^{2}-\mu^{2}+i\epsilon)}\Big]\upsilon(p)
+ \end{align*}
+
+ with $\Gamma^{\nu}=\gamma^{\nu}+\delta\Gamma^{\nu}$\\
+ 
+ In order to work out the loop momentum integral the method of Feynman parameters has to be introduced which simply 
+ combines the three propagators into a single quadratic polynomial in k, (for our case) raised in the third power.\\
+Working only the denominator part we have:
+
+\begin{align*}
+&\frac{1}{(k'^{2}+i\epsilon)(k^{2}+i\epsilon)((p-k)^{2}-\mu^{2}+i\epsilon)}=\\
+& =\int dx dy dz \delta(x+y+z-1)\frac{2!}{[y((p-k)^{2}-\mu^{2}+i\epsilon)+x(k^{2}+i\epsilon)+z(k'^{2}+i\epsilon)]^{3}}
+\end{align*}
+
+Having in mind that $k'=k+q$ and that $x+y+z=1$ we have that 
+
+\begin{align*}
+ &\int dx dy dz \delta(x+y+z-1)\frac{2!}{[y(p-k)^{2}-y\mu^{2}+xk^{2}+z(q-k)^{2}+i\epsilon]^{3}}
+\end{align*}
+ 
+ and having in mind that quarks are considered to be massless i.e. $p'^{2}=p^{2}=0$, I obtain:
+ 
+\begin{align*}
+ &\int dxdydz\delta(x+y+z-1)\frac{2}{[k^{2}-2k\cdot(yp-zq)-y\mu^{2}+zq^{2}+i\epsilon]^{3}}=\\
+ &=\int dxdydz\delta(x+y+z-1)\frac{2}{[(k-(yp-zq))^{2}-(yp-zq)^{2}-y\mu^{2}+zq^{2}+i\epsilon]^{3}}=\\
+ &=\int dxdydz\delta(x+y+z-1)\frac{2}{[l^{2}+zq^{2}(1-z)+2yzp\cdot q-y\mu^{2}+i\epsilon]^{3}}=\\
+ &=\int dxdydz\delta(x+y+z-1)\frac{2}{[l^{2}+zq^{2}(1-z)+yz(p+q)^{2}-yzq^{2}-y\mu^{2}+i\epsilon]^{3}}=\\
+  &=\int dxdydz\delta(x+y+z-1)\frac{2}{[l^{2}+zq^{2}(1-z)+yzp'^{2}-yzq^{2}-y\mu^{2}+i\epsilon]^{3}}=\\
+   &=\int dxdydz\delta(x+y+z-1)\frac{2}{[l^{2}+zxq^{2}-y\mu^{2}+i\epsilon]^{3}}
+\end{align*}
+
+thus the denominator can be written as $D=l^{2}-\Delta+i\epsilon$ with $\Delta=-zxq^{2}+y\mu^{2}$. \\
+Now the numerator:
+
+\begin{align*}
+ N^{\nu}&=\bar{u}(p')\Big[\gamma_{\rho}\slashed{k}'\gamma^{\nu}\slashed{k}\gamma^{\rho}\Big]\upsilon(p)=\\
+ &=(-2)\bar{u}(p')\Big[\slashed{k}\gamma^{\nu}\slashed{k}'\Big]\upsilon(p)=(-2)\bar{u}(p')\Big[\slashed{k}\gamma^{\nu}(\slashed{k}+\slashed{q})\Big]\upsilon(p)
+\end{align*}
+
+but $k=l-zq-yp$,  leading to:
+
+\begin{align*}
+ N^{\nu}&=(-2)\bar{u}(p')\Big[(\slashed{l}-z\slashed{q}+y\slashed{p})\gamma^{\nu}(\slashed{q}+\slashed{l}-z\slashed{q}+y\slashed{p})\Big]\upsilon(p)
+\end{align*}
+
+ once again the fact that quarks are massless implies that: $\bar{u}(p')\slashed{p}'=0$ and $\slashed{p}u(p)=0$. Now the goal is to bring it 
+ into a form similar to the Gordon Identity, so:
+ 
+ \begin{align*}
+   N^{\nu}&=(-2)\bar{u}(p')\Big[(\slashed{l}\gamma^{\nu}\slashed{l}+(y\slashed{p}-z\slashed{q})\gamma^{\nu}((1-z)\slashed{q}+y\slased{p})\Big]\upsilon(p)=\\
+          &=(-2)\bar{u}(p')\Big[\frac{-l^{2}}{2}\gamma^{\nu}+y\slashed{p}\gamma_{\nu}(1-z)\slashed{q}-z\slashed{q}\gamma^{\nu}(1-z)\slashed{q}\Big]\upsilon(p)=\\
+	  &=(-2)\bar{u}(p')\Big[\frac{-l^{2}}{2}\gamma^{\nu}-y(\slashed{p}'-\slashed{p})\gamma_{\nu}(1-z)\slashed{q}-z\slashed{q}\gamma^{\nu}(1-z)\slashed{q})\Big]\upsilon(p)=\\
+	  &=(-2)\bar{u}(p')\Big[\frac{-l^{2}}{2}\gamma^{\nu}-(y+z)(1-z)\slashed{q}\gamma^{\nu}\slashed{q}\Big]\upsilon(p)=\\
+	  &=(2)\bar{u}(p')\Big[\frac{l^{2}}{2}\gamma^{\nu}-(y+z)(1-z)q^{2}\gamma^{\nu}\Big]\upsilon(p)
+\end{align*}
+
+where we have used properties of the gamma matrices such as $\{\gamma^{\mu},\gamma^{\nu}\}=2g^{\mu\nu}$ and that 
+$\slashed{a}\slashed{a}=a^{2}$.\\
+The Gordon identity enables us to write the vertex in terms of the form factors $F_{1}(q^{2})$ and $F_{2}(q^{2})$ 
+but as it can be seen here, $\delta\Gamma^{\nu}$ is only dependent in $\gamma^{\nu}$ concluding that I already have in 
+hand the form factor $\delta F_{1}(q^{2})$. Concretely: 
+
+\begin{align*}
+ \bar{u}(p')\delta\Gamma^{\nu}\upsilon(p)=(-4ig^{2})\bar{u}(p')\Big[\int\frac{d^{4}k}{(2\pi)^{4}}\int dxdydz \delta(x+y+z-1)\frac{\frac{l^{2}}{2}-(y+z)(1-z)q^{2}}{D^{3}}\gamma^{\nu}\Big]\upsilon(p)
+\end{align*}
+
+ Now in order to perform the momentum integral we are going do a Wick rotation. This consists of a counter-clockwise
+ rotation in the $l^{0}$ plane such that we avoid the poles that appear. The Euclidian variables are defined as:
+ $l^{0}=il^{0}_{E}$ and $\vec{l}_{E}=\vec{l}$. After the rotation, the $k$ integral will be performed in the four
+ dimensional sperical coordinates. I will avoid restating the formulas of the integrals but I will mention the ones
+ that apply in our case:
+ 
+ \begin{align*}
+  \int \frac{d^{4}l}{(2\pi)^{4}}\frac{1}{[l^{2}-\Delta]^{n}}=\frac{i(-1)^{n}}{(4\pi)^{2}}\frac{1}{(n-1)(n-2)}\frac{1}{\Delta^{n-2}} 
+ \end{align*}
+
+ and
+
+  \begin{align*}
+  \int \frac{d^{4}l}{(2\pi)^{4}}\frac{l^{2}}{[l^{2}-\Delta]^{n}}=\frac{i(-1)^{n-1}}{(4\pi)^{2}}\frac{1}{(n-1)(n-2)(n-3)}\frac{1}{\Delta^{n-3}} 
+ \end{align*}
+ 
+ It can be seen that the second integral for this case $(n=3)$ is divergent. In order to address this issue, the 
+ Pauli-Villars regularization will be employed. This consists in introducing a ficticious, heavy, particle whose 
+ contribution is subtracted from that of the gluon. This results in a substitution in the gluon propagator:
+ 
+ \begin{align*}
+  \frac{1}{(p-k)^{2}-\mu^{2}+i\epsilon}\rightarrow \frac{1}{(p-k)^{2}-\mu^{2}+i\epsilon}-\frac{1}{(p-k)^{2}-\Lambda^{2}+i\epsilon}
+ \end{align*}
+
+Thus:
+
+\begin{align*}
+ \int \frac{d^{4}l}{(2\pi)^{4}}\Bigg(\frac{l^{2}}{[l^{2}-\Delta]^{3}}-\frac{l^{2}}{[l^{2}-\Delta_{\Lambda}]^{3}}\Bigg)=\frac{i}{(4\pi)^{2}}log\Big(\frac{\Delta_{\Lambda}}{\Delta}\Big)
+ \end{align*}
+
+ where $\Delta_{\Lambda}=-zxq^{2}+y\Lambda^{2}$, and for $\Lambda>>$ we have
+
+ \begin{align*}
+  \approx \frac{i}{(4\pi)^{2}}log\Big(\frac{y\Lambda^{2}}{\Delta}\Big)
+ \end{align*}
+
+ As indicated by the exercise, the renormalisation will be realised by subtraction at $q^{2}=0$ where the following 
+ substitution will be made: \\ $\delta F_{1}(q^{2})\rightarrow \delta F_{1}(q^{2})-\delta F_{1}(0)$ such that the 
+ condition $F_{1}(q^{2})=1$ is fullfilled. For the integral that is divergent the subtraction yields the following 
+ term:
+ 
+ \begin{align*}
+ \frac{i}{(4\pi)^{2}}\Bigg[log\Big(\frac{y\Lambda^{2}}{\Delta}\Big)-log\Big(\frac{y\Lambda^{2}}{y\mu^{2}}\Big)\Bigg]=\frac{i}{(4\pi)^{2}}log\Big(\frac{y\mu^{2}}{\Delta}\Big) 
+ \end{align*}
+
+ and the non divergent integral is:
+ 
+ \begin{align*}
+  \int \frac{d^{4}l}{(2\pi)^{4}}\frac{1}{[l^{2}-\Delta]^{3}}=\frac{-i}{(4\pi)^{2}}\frac{1}{2\Delta}
+ \end{align*}
+
+ To sum up:
+ 
+ \begin{align*}
+  i\mathcal{M}_{g.loop} &=\frac{2g^{2}}{(4\pi)^{2}}\bar{u}(p')\Bigg[\int dxdydz \delta(x+y+z-1)\bigg(log\Big(\frac{y\mu^{2}}{\Delta}\Big)+\frac{(1-x)(1-z)q^{2}}{\Delta}\bigg)\gamma^{\nu}\Bigg]\upsilon(p) i\mathcal{M}_{\nu lep}=\\
+			&=\frac{\alpha_{g}}{(2\pi)}\bar{u}(p')\Bigg[\int dxdydz \delta(x+y+z-1)\bigg(log\Big(\frac{y\mu^{2}}{\Delta}\Big)+\frac{(1-x)(1-z)q^{2}}{\Delta}\bigg)\gamma^{\nu}\Bigg]\upsilon(p) i\mathcal{M}_{\nu lep}
+ \end{align*}
+
+ leading to the form factor that includes the zero order corrections:
+ 
+ \begin{align*}
+  F_{1}(q^{2})=\Bigg[1+\frac{\alpha_{g}}{(2\pi)}\int dxdydz \delta(x+y+z-1)\bigg(log\Big(\frac{y\mu^{2}}{\Delta}\Big)+\frac{(1-x)(1-z)q^{2}}{\Delta}\bigg)\Bigg]
+ \end{align*}
+
+ satisfying $F_{1}(q^{2})=0$.
+ 
+\end{document}
+
+
+
+
+
+\documentclass[a4paper,10pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage[inline]{enumitem}
+
+% Title Page
+\title{Final Project - Radiation of Gluon Jets}
+\author{Georgios Billis}
+
+
