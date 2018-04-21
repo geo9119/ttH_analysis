@@ -22,84 +22,26 @@ void masses_wrong_ratio_opt(char name[300]){
 
 /////////////////////////////	Histograms	///////////////////////////////////////////////////////////////////
 
-TH2D *h1 = new TH2D("2D Histo","2D Histo of mt and mWp in peak;mWp;mt",40,0.,400.,40,0.,400.);
-
-TH2D *h2 = new TH2D("2DHisto","2D Histo of mtb and mWm in peak;mWm;mtb",40,0.,400.,40,0.,400.);
-
-TH1D *h3 = new TH1D("Higgs mass","Higgs mass for greatest weight",50,0.,500.);
-h3->SetXTitle("GeV");
-h3->SetYTitle("Counts");
-
-TH2D *h4 = new TH2D("2D Histos","2D Histo of mt and mWp out of peak;mWp;mt",40,0.,400.,40,0.,400.);
-
-TH2D *h5 = new TH2D("2DHistos","2D Histo of mtb and mWm out of peak;mWm;mtb",40,0.,400.,40,0.,400.);
-
-TH1D *h6 = new TH1D("w_correct/w_max","Ratio of weights",50,0.,1.);
-h6->SetXTitle("Ratio #frac{w_{c}}{W_{max}} ");
-h6->SetYTitle("Entries");
-
-TH1D *h7 = new TH1D("w_wrong/w_max","Ratio of weights",50,0.,1.);
-h7->SetXTitle("Ratio #frac{w_{w}}{W_{max}} ");
-h7->SetYTitle("Entries");
-
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////*******************************////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-int eventNumber;
-int mtop , mw , lepton_comb , jet_comb;
-double max_weight , max_higgs_mass , max_ttbar_mass , mean_higgs_mass;
-double Metx , Mety;
+int eventnumber , top_mass , w_mass , lep_comb , jet_comb; 
+double max_weight;
+double et1 , et2;
 double bh1[4] , bh2[4];
 double btop[4] , btopb[4];
-double lp[4] , lm[4];
-double n1px,n1py,n1pz , n2px,n2py,n2pz;
+double lp[4]  , lm[4];
+double n1px , n1py , n1pz , n1e;
+double n2px , n2py , n2pz , n2e;
 double w1,w2,x1,x2;
-double w_c;
-double RATIO;
-double weight;
+double max_higgs_mass , max_ttbar_mass , mean_mass;
 
-int flag;
-double w;
-double ratio;
-double m_Wp , m_Wm , m_H;
-double m_t , m_tb;
+double m_H;
+double m_top;
 
-
-
-int id;
-
-int eventNumber2;
-int mtop2 , mw2 , lepton_comb2 , jet_comb2;
-double max_weight2 , max_higgs_mass2 , max_ttbar_mass2 , mean_higgs_mass2;
-double Metx2 , Mety2;
-double bh_1[4] , bh_2[4];
-double b_top[4] , b_topb[4];
-double l_p[4] , l_m[4];
-double n1_px,n1_py,n1_pz , n2_px,n2_py,n2_pz;
-double w_1,w_2,x_1,x_2;
-int flag2;
-
-int eventNumber3;
-int mtop3 , mw3 , lepton_comb3 , jet_comb3;
-double max_weight3 , max_higgs_mass3 , max_ttbar_mass3 , mean_higgs_mass3;
-double Metx3 , Mety3;
-double b_h_1[4] , b_h_2[4];
-double b_Top[4] , b_Topb[4];
-double l_P[4] , l_M[4];
-double n1_p_x,n1_p_y,n1_p_z , n2_p_x,n2_p_y,n2_p_z;
-double W_1,W_2,X_1,X_2;
-int flag3;
-double max_weight_forcrrct;
-double corr_weight;
-
-double maximumweight;
-
-double n1e , n2e;
 
 double deta1 , dphi1 , dr1;
 double deta2 , dphi2 , dr2;
@@ -116,17 +58,34 @@ double deta12 , dphi12 , dr12;
 double deta13 , dphi13 , dr13;
 
 
-
-
 double E_tt , m_tt;
 double pt_H1 , pt_H2;
 double asym;
 double higgs_pt_ratio;
+double weight , w;
+
+int id;
 
 vector<double> ID;
 vector<double> WEIGHT;
 
+////////////////////////////////////////for the second file that loops for greatest weight
 
+int Eventnumber , Top_mass , W_mass , Lep_comb , Jet_comb; 
+double Max_weight;
+double Et1 , Et2;
+double Bh1[4] , Bh2[4];
+double Btop[4] , Btopb[4];
+double Lp[4]  , Lm[4];
+double N1px , N1py , N1pz;
+double N2px , N2py , N2pz;
+double w_1,w_2,x_1,x_2;
+double Max_higgs_mass , Max_ttbar_mass , Mean_mass;
+
+double m_t , m_tb;
+
+double maximumweight;
+double RATIO;
 
 //////////////////////////////	TREE DEFINITION	//////////////////////////////////////////////////////////
 /////////////////////////////	***************	//////////////////////////////////////////////////////////	
@@ -136,135 +95,83 @@ vector<double> WEIGHT;
 
 ///////////////////////////////	Tree of wrong solutions	/////////////////////////////////////////////////
 
-TTree *mytreewrng = new TTree("mytreewrng","mytreewrng");
+TTree *mytree = new TTree("mytree","mytree");
 
-mytreewrng->Branch("ratio_wrong"	,&RATIO		,"RATIO/D");
-mytreewrng->Branch("w1"			,&w1		,"w1/D");
-mytreewrng->Branch("w2"			,&w2		,"w2/D");
-mytreewrng->Branch("x1"			,&x1		,"x1/D");
-mytreewrng->Branch("x2"			,&x2		,"x2/D");
-mytreewrng->Branch("E_tt"		,&E_tt		,"E_tt/D");
-mytreewrng->Branch("higgs_pt_ratio"	,&higgs_pt_ratio,"higgs_pt_ratio/D");
-mytreewrng->Branch("higgs_pt_asym"	,&asym		,"asym/D");
-mytreewrng->Branch("deta1"		,&deta1		,"deta1/D");
-mytreewrng->Branch("dphi1"		,&dphi1		,"dphi1/D");
-mytreewrng->Branch("dr1"		,&dr1		,"dr1/D");
-mytreewrng->Branch("deta2"		,&deta2		,"deta2/D");
-mytreewrng->Branch("dphi2"		,&dphi2		,"dphi2/D");
-mytreewrng->Branch("dr2"		,&dr2		,"dr2/D");
-mytreewrng->Branch("deta3"		,&deta3		,"deta3/D");
-mytreewrng->Branch("dphi3"		,&dphi3		,"dphi3/D");
-mytreewrng->Branch("dr3"		,&dr3		,"dr3/D");
-mytreewrng->Branch("deta4"		,&deta4		,"deta4/D");
-mytreewrng->Branch("dphi4"		,&dphi4		,"dphi4/D");
-mytreewrng->Branch("dr4"		,&dr4		,"dr4/D");
-mytreewrng->Branch("deta5"		,&deta5		,"deta5/D");
-mytreewrng->Branch("dphi5"		,&dphi5		,"dphi5/D");
-mytreewrng->Branch("dr5"		,&dr5		,"dr5/D");
-mytreewrng->Branch("deta6"		,&deta6		,"deta6/D");
-mytreewrng->Branch("dphi6"		,&dphi6		,"dphi6/D");
-mytreewrng->Branch("dr6"		,&dr6		,"dr6/D");
-mytreewrng->Branch("deta7"		,&deta7		,"deta7/D");
-mytreewrng->Branch("dphi7"		,&dphi7		,"dphi7/D");
-mytreewrng->Branch("dr7"		,&dr7		,"dr7/D");
-mytreewrng->Branch("deta8"		,&deta8		,"deta8/D");
-mytreewrng->Branch("dphi8"		,&dphi8		,"dphi8/D");
-mytreewrng->Branch("dr8"		,&dr8		,"dr8/D");
-mytreewrng->Branch("deta9"		,&deta9		,"deta9/D");
-mytreewrng->Branch("dphi9"		,&dphi9		,"dphi9/D");
-mytreewrng->Branch("dr9"		,&dr9		,"dr9/D");
-mytreewrng->Branch("deta10"		,&deta10	,"deta10/D");
-mytreewrng->Branch("dphi10"		,&dphi10	,"dphi10/D");
-mytreewrng->Branch("dr10"		,&dr10		,"dr10/D");
-mytreewrng->Branch("deta11"		,&deta11	,"deta11/D");
-mytreewrng->Branch("dphi11"		,&dphi11	,"dphi11/D");
-mytreewrng->Branch("dr11"		,&dr11		,"dr11/D");
-mytreewrng->Branch("deta12"		,&deta12	,"deta12/D");
-mytreewrng->Branch("dphi12"		,&dphi12	,"dphi12/D");
-mytreewrng->Branch("dr12"		,&dr12		,"dr12/D");
-mytreewrng->Branch("deta13"		,&deta13	,"deta13/D");
-mytreewrng->Branch("dphi13"		,&dphi13	,"dphi13/D");
-mytreewrng->Branch("dr13"		,&dr13		,"dr13/D");
-
-
-
-/////////////////////////////	Tree of correct solutions ////////////////////////////////////////////////
-
-TTree *mytreecrrct = new TTree("mytreecrrct","mytreecrrct");
-
-mytreecrrct->Branch("ratio_correct"	,&ratio		,"ratio/D");
-mytreecrrct->Branch("w1"		,&w1		,"w1/D");
-mytreecrrct->Branch("w2"		,&w2		,"w2/D");
-mytreecrrct->Branch("x1"		,&x1		,"x1/D");
-mytreecrrct->Branch("x2"		,&x2		,"x2/D");
-mytreecrrct->Branch("E_tt"		,&E_tt		,"E_tt/D");
-mytreecrrct->Branch("higgs_pt_ratio"	,&higgs_pt_ratio,"higgs_pt_ratio/D");
-mytreecrrct->Branch("higgs_pt_asym"	,&asym		,"asym/D");
-mytreecrrct->Branch("deta1"		,&deta1		,"deta1/D");
-mytreecrrct->Branch("dphi1"		,&dphi1		,"dphi1/D");
-mytreecrrct->Branch("dr1"		,&dr1		,"dr1/D");
-mytreecrrct->Branch("deta2"		,&deta2		,"deta2/D");
-mytreecrrct->Branch("dphi2"		,&dphi2		,"dphi2/D");
-mytreecrrct->Branch("dr2"		,&dr2		,"dr2/D");
-mytreecrrct->Branch("deta3"		,&deta3		,"deta3/D");
-mytreecrrct->Branch("dphi3"		,&dphi3		,"dphi3/D");
-mytreecrrct->Branch("dr3"		,&dr3		,"dr3/D");
-mytreecrrct->Branch("deta4"		,&deta4		,"deta4/D");
-mytreecrrct->Branch("dphi4"		,&dphi4		,"dphi4/D");
-mytreecrrct->Branch("dr4"		,&dr4		,"dr4/D");
-mytreecrrct->Branch("deta5"		,&deta5		,"deta5/D");
-mytreecrrct->Branch("dphi5"		,&dphi5		,"dphi5/D");
-mytreecrrct->Branch("dr5"		,&dr5		,"dr5/D");
-mytreecrrct->Branch("deta6"		,&deta6		,"deta6/D");
-mytreecrrct->Branch("dphi6"		,&dphi6		,"dphi6/D");
-mytreecrrct->Branch("dr6"		,&dr6		,"dr6/D");
-mytreecrrct->Branch("deta7"		,&deta7		,"deta7/D");
-mytreecrrct->Branch("dphi7"		,&dphi7		,"dphi7/D");
-mytreecrrct->Branch("dr7"		,&dr7		,"dr7/D");
-mytreecrrct->Branch("deta8"		,&deta8		,"deta8/D");
-mytreecrrct->Branch("dphi8"		,&dphi8		,"dphi8/D");
-mytreecrrct->Branch("dr8"		,&dr8		,"dr8/D");
-mytreecrrct->Branch("deta9"		,&deta9		,"deta9/D");
-mytreecrrct->Branch("dphi9"		,&dphi9		,"dphi9/D");
-mytreecrrct->Branch("dr9"		,&dr9		,"dr9/D");
-mytreecrrct->Branch("deta10"		,&deta10	,"deta10/D");
-mytreecrrct->Branch("dphi10"		,&dphi10	,"dphi10/D");
-mytreecrrct->Branch("dr10"		,&dr10		,"dr10/D");
-mytreecrrct->Branch("deta11"		,&deta11	,"deta11/D");
-mytreecrrct->Branch("dphi11"		,&dphi11	,"dphi11/D");
-mytreecrrct->Branch("dr11"		,&dr11		,"dr11/D");
-mytreecrrct->Branch("deta12"		,&deta12	,"deta12/D");
-mytreecrrct->Branch("dphi12"		,&dphi12	,"dphi12/D");
-mytreecrrct->Branch("dr12"		,&dr12		,"dr12/D");
-mytreecrrct->Branch("deta13"		,&deta13	,"deta13/D");
-mytreecrrct->Branch("dphi13"		,&dphi13	,"dphi13/D");
-mytreecrrct->Branch("dr13"		,&dr13		,"dr13/D");
-
-
-
+mytree->Branch("ratio"		,&RATIO		,"RATIO/D");
+mytree->Branch("w1"		,&w1		,"w1/D");
+mytree->Branch("w2"		,&w2		,"w2/D");
+mytree->Branch("x1"		,&x1		,"x1/D");
+mytree->Branch("x2"		,&x2		,"x2/D");
+mytree->Branch("E_tt"		,&E_tt		,"E_tt/D");
+mytree->Branch("higgs_pt_ratio"	,&higgs_pt_ratio,"higgs_pt_ratio/D");
+mytree->Branch("higgs_pt_asym"	,&asym		,"asym/D");
+mytree->Branch("deta1"		,&deta1		,"deta1/D");
+mytree->Branch("dphi1"		,&dphi1		,"dphi1/D");
+mytree->Branch("dr1"		,&dr1		,"dr1/D");
+mytree->Branch("deta2"		,&deta2		,"deta2/D");
+mytree->Branch("dphi2"		,&dphi2		,"dphi2/D");
+mytree->Branch("dr2"		,&dr2		,"dr2/D");
+mytree->Branch("deta3"		,&deta3		,"deta3/D");
+mytree->Branch("dphi3"		,&dphi3		,"dphi3/D");
+mytree->Branch("dr3"		,&dr3		,"dr3/D");
+mytree->Branch("deta4"		,&deta4		,"deta4/D");
+mytree->Branch("dphi4"		,&dphi4		,"dphi4/D");
+mytree->Branch("dr4"		,&dr4		,"dr4/D");
+mytree->Branch("deta5"		,&deta5		,"deta5/D");
+mytree->Branch("dphi5"		,&dphi5		,"dphi5/D");
+mytree->Branch("dr5"		,&dr5		,"dr5/D");
+mytree->Branch("deta6"		,&deta6		,"deta6/D");
+mytree->Branch("dphi6"		,&dphi6		,"dphi6/D");
+mytree->Branch("dr6"		,&dr6		,"dr6/D");
+mytree->Branch("deta7"		,&deta7		,"deta7/D");
+mytree->Branch("dphi7"		,&dphi7		,"dphi7/D");
+mytree->Branch("dr7"		,&dr7		,"dr7/D");
+mytree->Branch("deta8"		,&deta8		,"deta8/D");
+mytree->Branch("dphi8"		,&dphi8		,"dphi8/D");
+mytree->Branch("dr8"		,&dr8		,"dr8/D");
+mytree->Branch("deta9"		,&deta9		,"deta9/D");
+mytree->Branch("dphi9"		,&dphi9		,"dphi9/D");
+mytree->Branch("dr9"		,&dr9		,"dr9/D");
+mytree->Branch("deta10"		,&deta10	,"deta10/D");
+mytree->Branch("dphi10"		,&dphi10	,"dphi10/D");
+mytree->Branch("dr10"		,&dr10		,"dr10/D");
+mytree->Branch("deta11"		,&deta11	,"deta11/D");
+mytree->Branch("dphi11"		,&dphi11	,"dphi11/D");
+mytree->Branch("dr11"		,&dr11		,"dr11/D");
+mytree->Branch("deta12"		,&deta12	,"deta12/D");
+mytree->Branch("dphi12"		,&dphi12	,"dphi12/D");
+mytree->Branch("dr12"		,&dr12		,"dr12/D");
+mytree->Branch("deta13"		,&deta13	,"deta13/D");
+mytree->Branch("dphi13"		,&dphi13	,"dphi13/D");
+mytree->Branch("dr13"		,&dr13		,"dr13/D");
+mytree->Branch("m_H"		,&m_H		,"m_H/D");
+mytree->Branch("event_number"	,&eventnumber	,"eventnumber/I");
+mytree->Branch("lep_comb"	,&lep_comb	,"lep_comb/I");
+mytree->Branch("jet_comb"	,&jet_comb	,"jet_comb/I");
 
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+//	FILE *file = fopen("/home/george/Desktop/ttjets/rootfiles_ttjets/output_ttjets_debug.txt","r");
 
-//	FILE *file = fopen("/home/george/Desktop/wrong_weights/wrong_weights_allsol.txt","r");
+//	FILE *file = fopen("/home/george/Desktop/ttjets/output_ttjets/ttjets_4.dat.out","r");
 	FILE *file = fopen(name,"r");
 
 
 while(!feof(file)){
 
-	fscanf(file," %d "	,&eventNumber);
-	fscanf(file," %d "	,&mtop);
-	fscanf(file," %d "	,&mw);
-	fscanf(file," %d "	,&lepton_comb);
-	fscanf(file," %d "	,&jet_comb);
-	fscanf(file," %lf "	,&max_weight);
-	fscanf(file," %lf "	,&max_higgs_mass);
-	fscanf(file," %lf "	,&max_ttbar_mass);
-	fscanf(file," %lf "	,&mean_higgs_mass);
-	fscanf(file," %lf %lf " ,&Metx	,&Mety);
+        fscanf(file," %d "      ,&eventnumber);
+        fscanf(file," %d "      ,&top_mass);
+        fscanf(file," %d "      ,&w_mass);
+        fscanf(file," %d "      ,&lep_comb);
+        fscanf(file," %d "      ,&jet_comb);
+        fscanf(file," %lf "     ,&max_weight);
+        fscanf(file," %lf "     ,&max_higgs_mass);
+        fscanf(file," %lf "     ,&max_ttbar_mass);
+        fscanf(file," %lf "     ,&mean_mass);
+        fscanf(file," %lf %lf " ,&et1  ,&et2);
         fscanf(file," %lf %lf %lf ", &bh1[1]  ,&bh1[2]  ,&bh1[3]);
         fscanf(file," %lf %lf %lf ", &bh2[1]  ,&bh2[2]  ,&bh2[3]);
         fscanf(file," %lf %lf %lf ", &btop[1]  ,&btop[2]  ,&btop[3]);
@@ -273,12 +180,12 @@ while(!feof(file)){
         fscanf(file," %lf %lf %lf ", &lm[1]  ,&lm[2]  ,&lm[3]);
         fscanf(file," %lf %lf %lf ", &n1px  ,&n1py  ,&n1pz);
         fscanf(file," %lf %lf %lf ", &n2px  ,&n2py  ,&n2pz);
-	fscanf(file," %d "	   ,&flag);
-	fscanf(file," %lf %lf "	   ,&w1,&w2);
-	fscanf(file," %lf %lf "	   ,&x1,&x2);
+        fscanf(file," %lf %lf "    ,&w1,&w2);
+        fscanf(file," %lf %lf "    ,&x1,&x2);
+
 
 //cout<<"loop1"<<'\n';
-cout<<eventNumber<<'\n';
+cout<<eventnumber<<'\n';
 
 // Create all the 4Vectors //
 
@@ -337,14 +244,6 @@ m_tt = tt.M();
 ///	Reconstruction of the masses	//
 
 // W masses //
-
-TLorentzVector Wp, Wm;
-
-Wp = n1 + l1;
-Wm = n2 + l2;
-
-m_Wp = Wp.M();
-m_Wm = Wm.M();
 
 
 // Higgs mass	//
@@ -448,21 +347,26 @@ deta13 = higgs2.Eta() - t2.Eta();
 dphi13 = fabs(higgs2.DeltaPhi(t2));
 dr13 = sqrt(deta13*deta13 + dphi13*dphi13);
 
+/*//// bh2 and bh1  ////
 
-// Ratio of w_correct with w_max	//
+deta14 = higgs2.Eta() - higgs1.Eta();
+dphi14 = fabs(higgs2.DeltaPhi(higgs1));
+dr14 = sqrt(deta14*deta14 + dphi14*dphi14);
+*/
+
 
 w = (w1*w2)/(x1*x2);
 
 //ratio =w_c/max_weight;
 
-weight=(w_1*w_2)/(x_1*x_2);
+//weight=(w_1*w_2)/(x_1*x_2);
 
 
-id = eventNumber;
+id = eventnumber;
 
 
-	
-if(flag==0){
+////////////////////////////////////////////////////////////////////////////////////////////	
+
 
 maximumweight = 0.0;
 
@@ -478,39 +382,41 @@ maximumweight = 0.0;
 
 // loop over the same (wrong) event to get the maximum weight///
 
-//FILE *file2 = fopen("/home/george/Desktop/wrong_weights/wrong_weights_allsol2.txt","r");
+
+//	FILE *file2 = fopen("/home/george/Desktop/ttjets/rootfiles_ttjets/output_ttjets_debug.txt","r");
+
+//FILE *file2 = fopen("/home/george/Desktop/ttjets/output_ttjets/ttjets_4.dat.out","r");
 FILE *file2 = fopen(name,"r");
 
 
 	while(!feof(file2)){
 
-		fscanf(file2," %d "	,&eventNumber2);
-		fscanf(file2," %d "	,&mtop2);
-		fscanf(file2," %d "	,&mw2);
-		fscanf(file2," %d "	,&lepton_comb2);
-		fscanf(file2," %d "	,&jet_comb2);
-		fscanf(file2," %lf "	,&max_weight2);
-		fscanf(file2," %lf "	,&max_higgs_mass2);
-		fscanf(file2," %lf "	,&max_ttbar_mass2);
-		fscanf(file2," %lf "	,&mean_higgs_mass2);
-		fscanf(file2," %lf %lf " ,&Metx2	,&Mety2);
-        	fscanf(file2," %lf %lf %lf ", &bh_1[1]  ,&bh_1[2]  ,&bh_1[3]);
-        	fscanf(file2," %lf %lf %lf ", &bh_2[1]  ,&bh_2[2]  ,&bh_2[3]);
-        	fscanf(file2," %lf %lf %lf ", &b_top[1]  ,&b_top[2]  ,&b_top[3]);
-        	fscanf(file2," %lf %lf %lf ", &b_topb[1]  ,&b_topb[2]  ,&b_topb[3]);
-        	fscanf(file2," %lf %lf %lf ", &l_p[1]  ,&l_p[2]  ,&l_p[3]);
-        	fscanf(file2," %lf %lf %lf ", &l_m[1]  ,&l_m[2]  ,&l_m[3]);
-        	fscanf(file2," %lf %lf %lf ", &n1_px  ,&n1_py  ,&n1_pz);
-        	fscanf(file2," %lf %lf %lf ", &n2_px  ,&n2_py  ,&n2_pz);
-		fscanf(file2," %d "	   ,&flag2);
-		fscanf(file2," %lf %lf "	   ,&w_1,&w_2);
-		fscanf(file2," %lf %lf "	   ,&x_1,&x_2);
+        fscanf(file2," %d "      ,&Eventnumber);
+        fscanf(file2," %d "      ,&Top_mass);
+        fscanf(file2," %d "      ,&W_mass);
+        fscanf(file2," %d "      ,&Lep_comb);
+        fscanf(file2," %d "      ,&Jet_comb);
+        fscanf(file2," %lf "     ,&Max_weight);
+        fscanf(file2," %lf "     ,&Max_higgs_mass);
+        fscanf(file2," %lf "     ,&Max_ttbar_mass);
+        fscanf(file2," %lf "     ,&Mean_mass);
+        fscanf(file2," %lf %lf " ,&Et1  ,&Et2);
+        fscanf(file2," %lf %lf %lf ", &Bh1[1]  ,&Bh1[2]  ,&Bh1[3]);
+        fscanf(file2," %lf %lf %lf ", &Bh2[1]  ,&Bh2[2]  ,&Bh2[3]);
+        fscanf(file2," %lf %lf %lf ", &Btop[1]  ,&Btop[2]  ,&Btop[3]);
+        fscanf(file2," %lf %lf %lf ", &Btopb[1]  ,&Btopb[2]  ,&Btopb[3]);
+        fscanf(file2," %lf %lf %lf ", &Lp[1]  ,&Lp[2]  ,&Lp[3]);
+        fscanf(file2," %lf %lf %lf ", &Lm[1]  ,&Lm[2]  ,&Lm[3]);
+        fscanf(file2," %lf %lf %lf ", &N1px  ,&N1py  ,&N1pz);
+        fscanf(file2," %lf %lf %lf ", &N2px  ,&N2py  ,&N2pz);
+        fscanf(file2," %lf %lf "    ,&w_1,&w_2);
+        fscanf(file2," %lf %lf "    ,&x_1,&x_2);
 		
 weight=(w_1*w_2)/(x_1*x_2);
 
 //cout<<"read"<<'\n';
-	if(flag2==0){
-		if(id==eventNumber2){
+	
+		if(id==Eventnumber){
 //				cout<<"deepest-1 loop"<<'\n';		
 //				cout<<"id="<<id<<'\n';
 //				cout<<w_1<<"/"<<w_2<<"/"<<x_1<<"/"<<x_2<<'\n';
@@ -518,14 +424,14 @@ weight=(w_1*w_2)/(x_1*x_2);
 //				cout<<maximumweight<<'\n';
 			if(weight > maximumweight){
 				maximumweight = weight; 
-//				cout<<"DEEPEST LOOP"<<'\n';
+//				cout<<"\t DEEPEST LOOP"<<'\n';
 			}
 		}
-	}
+	
 //cout<<"second loop"<<'\n';
 
 
-	}
+	}// end of while from the second scan
 fclose(file2);
 
 ID.push_back(id);
@@ -537,179 +443,29 @@ WEIGHT.push_back(maximumweight);
 
 RATIO = w/maximumweight; 
 
-mytreewrng->Fill();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-if(m_H>120 && m_H<130){
-	h1->Fill(m_Wp,m_t);
-	h2->Fill(m_Wm,m_tb);
 
-}
-
-if(m_H<120 || m_H>130){
-	h4->Fill(m_Wp,m_t);
-	h5->Fill(m_Wm,m_tb);
-}
+	mytree->Fill();
 
 
 
-//h6->Fill(ratio);
-*/
-//h7->Fill(RATIO);
 
-//if (w_c<0){cout<<"problemo "<<w_c<<'\n';}
-
-
-}	// flag's bracket
-
-else{
-
-	if(flag==1){
-	//h3->Fill(m_H);
-
-	//w_c = (w1*w2)/(x1*x2);	
-	
-	max_weight_forcrrct = 0.0;
-
-	FILE *file3 = fopen(name,"r");
-
-
-        while(!feof(file3)){
-
-                fscanf(file3," %d "     ,&eventNumber3);
-                fscanf(file3," %d "     ,&mtop3);
-                fscanf(file3," %d "     ,&mw3);
-                fscanf(file3," %d "     ,&lepton_comb3);
-                fscanf(file3," %d "     ,&jet_comb3);
-                fscanf(file3," %lf "    ,&max_weight3);
-                fscanf(file3," %lf "    ,&max_higgs_mass3);
-                fscanf(file3," %lf "    ,&max_ttbar_mass3);
-                fscanf(file3," %lf "    ,&mean_higgs_mass3);
-                fscanf(file3," %lf %lf " ,&Metx3       ,&Mety3);
-                fscanf(file3," %lf %lf %lf ", &b_h_1[1]  ,&b_h_1[2]  ,&b_h_1[3]);
-                fscanf(file3," %lf %lf %lf ", &b_h_2[1]  ,&b_h_2[2]  ,&b_h_2[3]);
-                fscanf(file3," %lf %lf %lf ", &b_Top[1]  ,&b_Top[2]  ,&b_Top[3]);
-                fscanf(file3," %lf %lf %lf ", &b_Topb[1]  ,&b_Topb[2]  ,&b_Topb[3]);
-                fscanf(file3," %lf %lf %lf ", &l_P[1]  ,&l_P[2]  ,&l_P[3]);
-                fscanf(file3," %lf %lf %lf ", &l_M[1]  ,&l_M[2]  ,&l_M[3]);
-                fscanf(file3," %lf %lf %lf ", &n1_p_x  ,&n1_p_y  ,&n1_p_z);
-                fscanf(file3," %lf %lf %lf ", &n2_p_x  ,&n2_p_y  ,&n2_p_z);
-                fscanf(file3," %d "        ,&flag3);
-                fscanf(file3," %lf %lf "   ,&W_1,&W_2);
-                fscanf(file3," %lf %lf "   ,&X_1,&X_2);
-
-		corr_weight = (W_1*W_2)/(X_1*X_2);
-		
-			if(id==eventNumber3){
-				if(corr_weight>max_weight_forcrrct){
-					max_weight_forcrrct = corr_weight;
-				}
-			}
-
-	}
-fclose(file3);
-
-	ratio = w/max_weight_forcrrct;
-
-mytreecrrct->Fill();
-	}
-}
 
 }//	End of while loop	/////
 
 fclose(file);
 
-//	Canvases	//
-
-/*
-TCanvas *c1 = new TCanvas("c1","Higgs_mass");
-c1->cd();
-
-h3->Draw();
-
-c1->SaveAs("Higgs_mass_sametxt.png");
-*/
-/////
-/*
-TCanvas *c2 = new TCanvas("c2","top vs mWp");
-c2->cd();
-
-h1->Draw("Colz");
-
-c2->SaveAs("topmass_vs_mWpmass_inpeak.png");
-*/
-
-/////
-/*
-TCanvas *c3 = new TCanvas("c3","topb vs mWm");
-c3->cd();
-
-h2->Add(h1);
-h2->Draw("Colz");
-
-c3->SaveAs("topmass_vs_mWmass_total_inpeak.png");
-
-
-//
-
-TCanvas *c4 = new TCanvas("c4","top vs mWp");
-c4->cd();
-
-
-h4->Add(h5);
-h4->Draw("Colz");
-
-c4->SaveAs("topmass_vs_mWmass_total_outofpeak.png");
-
-
-/////
-
-TCanvas *c5 = new TCanvas("c5","top vs mWp");
-c5->cd();
-
-h5->Draw("Colz");
-
-c5->SaveAs("topbmass_vs_mWmmass_outofpeak.png");
-*/
-/////
-
-/*
-TCanvas *c6 = new TCanvas("c6","w_correct/w_max");
-c6->cd();
-
-h6->Draw();
-
-c6->SaveAs("ratio_of_w.png");
-*/
-/*
-TCanvas *c7 = new TCanvas("c6","w_wrong/w_max");
-c7->cd();
-
-h7->Draw();
-
-c7->SaveAs("ratio_of_w_wrong_sametxt.png");
-*/
-
 //////////////////////////////////	ROOT FILES CREATION	//////////////////////////////////////////
 
-TFile *fileW = new TFile("wrng_sol.root","RECREATE");
+TFile *Rfile = new TFile("ttjets.root","RECREATE");
 
-fileW->cd();
+Rfile->cd();
 
-mytreewrng->Write();
+mytree->Write();
 
-fileW->Close();
+Rfile->Close();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-TFile *fileC = new TFile("crrct_sol.root","RECREATE");
-
-fileC->cd();
-
-mytreecrrct->Write();
-
-fileC->Close();
 
 
 }

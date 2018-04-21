@@ -41,15 +41,18 @@ int out_nobdt = 0;
 
 gStyle->SetOptStat(0);
 
-//double w = (0.5071*0.5824*200000.)/1167.;
-double w = 1;
 
-/*
 float M_H = 0;
 float Prob = 0;
 float Ratio = 0;
 int Eventnumber = 0;
-*/
+
+//double w = (831.*1.*200000.)/3680.;	/// w = (cross_section*Branching_ratio*lumi)/(#of generated events)
+
+//double w = 689/3887;
+
+double w = 1.;
+
 
 TH1D* histo_higgsmass[6]; 
 
@@ -66,7 +69,7 @@ histo_ratio_w_wrong->SetXTitle("ratio #frac{w}{w_{max}}");
 histo_ratio_w_wrong->SetYTitle("#bf{Entries}");
 
 
-TFile *f1 = new TFile("post_TMVA_FINAL_BOTH_2.root");
+TFile *f1 = new TFile("ttjets_after_tmva_Eval.root");
 TTree * tree1 = (TTree*) f1->Get("mytree");
 tree1->SetBranchAddress("higgsmass",&m_H);
 tree1->SetBranchAddress("eventnumber",&eventnumber);
@@ -93,20 +96,20 @@ tree1->SetBranchAddress("ratio",&ratio);
 	}
 
 
-/*
-TFile *f2 = new TFile("post_TMVA_FINAL_BOTH_2.root");
+
+TFile *f2 = new TFile("ttjets_after_tmva_Eval.root");
 TTree * tree2 = (TTree*) f2->Get("mytree");
 tree2->SetBranchAddress("higgsmass",&M_H);
 tree2->SetBranchAddress("eventnumber",&Eventnumber);
 tree2->SetBranchAddress("prob",&Prob);
 tree2->SetBranchAddress("ratio",&Ratio);
 
-
+/*
 vector<int> sameEV;
 
 	for(int i=0; i<tree1->GetEntries();i++){
 		tree1->GetEntry(i);
-			if(prob>){
+			if(prob>-999.9){
 				for(int j=0;j<sameEV.size();j++){
 					if(eventnumber==sameEV[j]){
 						
@@ -161,13 +164,14 @@ l++;
 z+=0.1;
 }
 
-double sc_1 = 31./889.;
-double sc_2 = 31./889.;
-double sc_3 = 31./889.;
-double sc_4 = 31./889.;
-double sc_5 = 31./889.;
-double sc_6 = 31./889.;
-double sc_7 = 31./889.;
+
+double sc_1 = 689./3887.;
+double sc_2 = 689./3848.;
+double sc_3 = 689./3792.;
+double sc_4 = 689./3656.;
+double sc_5 = 689./2753.;
+double sc_6 = 689./885.;
+double sc_7 = 689./73.;
 
 
 histo_higgsmass_bef->Scale(sc_1);
@@ -177,7 +181,6 @@ histo_higgsmass[2]->Scale(sc_1);
 histo_higgsmass[3]->Scale(sc_1);
 histo_higgsmass[4]->Scale(sc_1);
 histo_higgsmass[5]->Scale(sc_1);
-
 
 
 
@@ -236,10 +239,6 @@ cout<<"Number of entries ="<<histo_higgsmass[4]->GetEntries()<<"/in= "<<in[4]<<"
 cout<<"Number of entries ="<<histo_higgsmass[5]->GetEntries()<<"/in= "<<in[5]<<"/out= "<<out[5]<<endl;
 
 
-
-
-////////////////////	CALCULATION OF WEIGHTED ENTRIES	////////////////////////////////////////////////////////
-
 cout<<"Number of WEIGHTED entries NO BDT="<<histo_higgsmass_bef->Integral()<<endl;
 cout<<"Number of WEIGHTED entries BDT>-0.3 ="<<histo_higgsmass[0]->Integral()<<endl;
 cout<<"Number of WEIGHTED entries BDT>-0.2 ="<<histo_higgsmass[1]->Integral()<<endl;
@@ -249,7 +248,7 @@ cout<<"Number of WEIGHTED entries BDT>0.1  ="<<histo_higgsmass[4]->Integral()<<e
 cout<<"Number of WEIGHTED entries BDT>0.2  ="<<histo_higgsmass[5]->Integral()<<endl;
 
 
-double tot_0 = histo_higgsmass_bef->GetBinContent(6) + histo_higgsmass_bef->GetBinContent(7) + histo_higgsmass_bef->GetBinContent(8) + histo_higgsmass_bef->GetBinContent(9) + histo_higgsmass_bef->GetBinContent(10) + histo_higgsmass_bef->GetBinContent(11) + histo_higgsmass_bef->GetBinContent(12) + histo_higgsmass_bef->GetBinContent(13) + histo_higgsmass_bef->GetBinContent(14) + histo_higgsmass_bef->GetBinContent(15) + histo_higgsmass_bef->GetBinContent(16) + histo_higgsmass_bef->GetBinContent(17) + histo_higgsmass_bef->GetBinContent(18) + histo_higgsmass_bef->GetBinContent(19) + histo_higgsmass_bef->GetBinContent(20); 
+double tot_0 = histo_higgsmass_bef->GetBinContent(6) + histo_higgsmass_bef->GetBinContent(7) + histo_higgsmass_bef->GetBinContent(8) + histo_higgsmass_bef->GetBinContent(9) + histo_higgsmass_bef->GetBinContent(10) + histo_higgsmass_bef->GetBinContent(11) + histo_higgsmass_bef->GetBinContent(12) + histo_higgsmass_bef->GetBinContent(13) + histo_higgsmass_bef->GetBinContent(14) + histo_higgsmass_bef->GetBinContent(15) + histo_higgsmass_bef->GetBinContent(16) + histo_higgsmass_bef->GetBinContent(17) + histo_higgsmass_bef->GetBinContent(18) + histo_higgsmass_bef->GetBinContent(19) + histo_higgsmass_bef->GetBinContent(20);
 
 double tot_1 = histo_higgsmass[0]->GetBinContent(6) +histo_higgsmass[0]->GetBinContent(7) +histo_higgsmass[0]->GetBinContent(8) +histo_higgsmass[0]->GetBinContent(9) +histo_higgsmass[0]->GetBinContent(10) +histo_higgsmass[0]->GetBinContent(11) +histo_higgsmass[0]->GetBinContent(12) + histo_higgsmass[0]->GetBinContent(13) + histo_higgsmass[0]->GetBinContent(14) + histo_higgsmass[0]->GetBinContent(15) + histo_higgsmass[0]->GetBinContent(16)+ histo_higgsmass[0]->GetBinContent(17)+ histo_higgsmass[0]->GetBinContent(18)+ histo_higgsmass[0]->GetBinContent(19)+ histo_higgsmass[0]->GetBinContent(20);
 
@@ -299,15 +298,5 @@ TLegend *leg2 = new TLegend(0.6,0.6,0.9,0.9);
  pave_CMS->Draw("same");
 
 c2->SaveAs("ratio_w_diff_definition.png");
-
-
-////////
-
-TCanvas *c3 = new TCanvas("c3","test");
-c3->cd();
-
-histo_higgsmass_bef->Draw("HIST");
-
-c3->SaveAs("test.png");
 
 }
